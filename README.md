@@ -1,7 +1,7 @@
 
 # Sistema de Recursos Humanos
 
-Este proyecto es un sistema de gestión de empleados construido con React.
+Este proyecto es un sistema de gestión de empleados construido con React y Bootstraps.
 
 ## Estructura del Proyecto
 
