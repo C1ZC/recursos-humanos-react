@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { NumericFormat } from 'react-number-format';
@@ -16,7 +17,11 @@ export default function ListadoEmpleados() {
             console.log(resultados.data);
             setEmpleados(resultados.data);
         }
-
+        const eliminarEmpleado = async (id) => {
+            await axios.delete(`${urlBase}/${id}`);
+            cargarEmpleados();
+        }
+        
 
   return (
 
@@ -32,6 +37,7 @@ export default function ListadoEmpleados() {
                     <th scope="col">Empleado</th>
                     <th scope="col">Departamento</th>
                     <th scope="col">Sueldo</th>
+                    <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,6 +53,13 @@ export default function ListadoEmpleados() {
                             thousandSeparator= ',' prefix={'$'}
                             decimalScale={0} fixedDecimalScale/>                       
                             </td>
+                        <td className='textcenter'>
+                            <Link to={`/editar/${empleado.idEmpleado}`}
+                                className='btn btn-warning btn-sm me-3'>Editar</Link>
+                            <button onClick={() => eliminarEmpleado(empleado.idEmpleado)}
+                                className='btn btn-danger btn-sm'
+                            >Eliminar</button>
+                        </td>
                         </tr>
                     ))         
                     }

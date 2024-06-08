@@ -1,29 +1,54 @@
+import axios from 'axios';
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function AgregarEmpleado() {
+
+        let Navegacion = useNavigate();
+
+        const [empleado, setEmpleado] = React.useState({
+            nombre: '',
+            departamento: '',
+            sueldo: ''
+        })
+        const{nombre, departamento, sueldo} = empleado
+        const onInputChange = (e) =>{
+            setEmpleado({...empleado, [e.target.name]: e.target.value})
+        }
+        const onSubmit = async (e) => {
+            e.preventDefault();
+            const urlBase = "http://localhost:8081/rrss-app/empleados"
+            await axios.post(urlBase, empleado);
+            Navegacion('/');
+        }
+
   return (
     <div className='container'>
         <div className='container text-center' style={{margin: "30px"}}>
             <h3>Agregar Empleado</h3>
         </div>
 
-        <form>
+        <form onSubmit={(e) => onSubmit(e)}>
         <div className="mb-3">
             <label htmlFor="nombre" className="form-label">Nombre</label>
             <input type="text" className="form-control" 
-            id="nombre" name='nombre' required={true} />
+            id="nombre" name='nombre' required={true} 
+            value={nombre} onChange={(e)=>onInputChange(e)}/>
+
         </div>
         <div className="mb-3">
             <label htmlFor="departamento" 
                 className="form-label">Departamento</label>
             <input type="text" className="form-control" 
-            id="departamento" name='departamento' />
+            id="departamento" name='departamento' 
+            value={departamento} onChange={(e)=>onInputChange(e)}/>
         </div>
         <div className="mb-3">
             <label htmlFor="sueldo" 
                 className="form-label">Sueldo</label>
             <input type="number" step="any" className="form-control" 
-            id="sueldo" name='sueldo'/>
+            id="sueldo" name='sueldo'
+            value={sueldo} onChange={(e)=>onInputChange(e)}/>
         </div>
         <div className='text-center'>
             <button type="submit" 
